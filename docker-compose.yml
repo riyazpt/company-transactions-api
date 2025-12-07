@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: company-transactions-api
+    container_name: company-transactions-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - company-network
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+
+  nginx:
+    image: nginx:alpine
+    container_name: company-transactions-nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - company-network
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8.0
+    container_name: company-transactions-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      # MYSQL_USER and MYSQL_PASSWORD are for creating a NON-ROOT user. 
+      # Since .env has DB_USERNAME=root, we should not set these.
+      # We just rely on root.
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - company-network
+
+networks:
+  company-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local

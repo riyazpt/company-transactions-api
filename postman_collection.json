@@ -1,0 +1,139 @@
+{
+    "info": {
+        "_postman_id": "company-transactions-api",
+        "name": "Company Transactions API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Auth",
+            "item": [
+                {
+                    "name": "Login",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "json",
+                            "json": "{\"email\":\"admin@example.com\", \"password\":\"password\"}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/login",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "login"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Logout",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": "{{base_url}}/api/logout"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Transactions",
+            "item": [
+                {
+                    "name": "List Transactions",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "{{base_url}}/api/transactions"
+                    }
+                },
+                {
+                    "name": "Create Transaction",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "json",
+                            "json": "{\"amount\": 100, \"payer_id\": 2, \"due_on\": \"2023-12-31\", \"vat_percentage\": 20, \"is_vat_inclusive\": false}"
+                        },
+                        "url": "{{base_url}}/api/transactions"
+                    }
+                },
+                {
+                    "name": "Get Transaction",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "{{base_url}}/api/transactions/1"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Payments",
+            "item": [
+                {
+                    "name": "Add Payment",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "json",
+                            "json": "{\"amount\": 50, \"paid_on\": \"2023-11-20\", \"details\": \"Partial Payment\"}"
+                        },
+                        "url": "{{base_url}}/api/transactions/1/payments"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Reports",
+            "item": [
+                {
+                    "name": "Monthly Report",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/reports/monthly?start_date=2023-01-01&end_date=2023-12-31",
+                            "query": [
+                                {
+                                    "key": "start_date",
+                                    "value": "2023-01-01"
+                                },
+                                {
+                                    "key": "end_date",
+                                    "value": "2023-12-31"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+            }
+        ]
+    },
+    "event": [],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8000"
+        },
+        {
+            "key": "token",
+            "value": ""
+        }
+    ]
+}
