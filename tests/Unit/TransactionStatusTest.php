@@ -40,6 +40,8 @@ class TransactionStatusTest extends TestCase
             'is_vat_inclusive' => false,
             'due_on' => now()->addDay(),
         ]);
+          
+
         
         // Mocking the payments relationship is tricky on a clean model.
         // It's easier to save it to DB or set relations manually.
