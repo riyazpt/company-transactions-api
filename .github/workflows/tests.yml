@@ -25,7 +25,7 @@ jobs:
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
     - name: Install Dependencies
-      run: composer install -q --no-ansible --no-interaction --no-scripts --no-progress --prefer-dist
+      run: composer install --no-ansible --no-interaction --no-scripts --no-progress --prefer-dist
 
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
